@@ -1,0 +1,27 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: mi-primera-vm
+spec:
+  running: true
+  template:
+    spec:
+      domain:
+        resources:
+          requests:
+            memory: 128Mi
+        devices:
+          disks:
+          - name: containerdisk
+            disk:
+              bus: virtio
+          interfaces:
+          - name: default
+            masquerade: {}
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - name: containerdisk
+        containerDisk:
+          image: quay.io/kubevirt/cirros-container-disk-demo
